@@ -8,5 +8,5 @@ export default function Button({ children, handleClick }: React.PropsWithChildre
     >
       {children}
     </button>
-  )
+  );
 }
