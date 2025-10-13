@@ -1,34 +1,36 @@
 import { Maximize2, Minus, Pause, Play, RotateCcw } from "lucide-react";
 
-import Button from "./components/Buttons";
-import { TrafficLight } from "./components/Indicator";
-import { ProgressBar } from "./components/ProgressBar";
-import { Timer } from "./components/Timer";
+import Button from "@/components/ui/Buttons";
+import { ProgressBar } from "@/components/ui/ProgressBar";
+import { Timer } from "@/components/ui/Timer";
+import { TrafficLight } from "@/components/ui/TrafficLight";
 
-import { useTimerContext, useTimerDispatchContext, useTimerStateDurationContext } from "./context/TimerContext";
+import { useTimerContext, useTimerDispatchContext, useTimerStateDurationContext } from "@/context/TimerContext";
 
 function App() {
-  const { currentState, isRunning } = useTimerContext();
-  const dispatch = useTimerDispatchContext();
-  const { stateDurations } = useTimerStateDurationContext();
+  // const { currentSemaforoState: currentState, currentTimerState: isRunning } = useTimerContext();
+  // const dispatch = useTimerDispatchContext();
+  // const { stateDurations } = useTimerStateDurationContext();
 
   const handleStart = () => {
-    dispatch({
-      type: "set_running",
-    });
+    // dispatch({
+    //   type: "set_running",
+    // });
   };
 
   const handlePause = () => {
-    dispatch({
-      type: "set_pause",
-    });
+    //   dispatch({
+    //     type: "set_pause",
+    //   });
   };
 
   const handleReset = () => {
-    dispatch({ type: "set_pause" });
-    dispatch({ type: "update_current_state", payload: "focus" });
-    dispatch({ type: "update_time_left", payload: stateDurations[currentState] });
+    //   dispatch({ type: "set_pause" });
+    //   dispatch({ type: "update_current_state", payload: "focus" });
+    //   dispatch({ type: "update_time_left", payload: stateDurations[currentState] });
   };
+
+  const isRunning = false;
 
   return (
     <div className="h-screen bg-gray-100 flex items-center justify-center">
@@ -36,29 +38,29 @@ function App() {
         {/* Window controls */}
         <div className="absolute top-4 left-4 flex space-x-2">
           {!isRunning ? (
-            <Button handleClick={handleStart}>
+            <Button onClick={handleStart}>
               <Play size={18} />
             </Button>
           ) : (
-            <Button handleClick={handlePause}>
+            <Button onClick={handlePause}>
               <Pause size={18} />
             </Button>
           )}
-          <Button handleClick={handleReset}>
+          <Button onClick={handleReset}>
             <RotateCcw size={18} />
           </Button>
         </div>
 
         <div className="absolute top-4 right-4 flex space-x-2">
           <Button
-            handleClick={() => {
+            onClick={() => {
               console.log("Minimize");
             }}
           >
             <Minus size={18} />
           </Button>
           <Button
-            handleClick={() => {
+            onClick={() => {
               console.log("Expand");
             }}
           >
@@ -68,7 +70,7 @@ function App() {
 
         {/* Timer display */}
         <div className="flex flex-col items-center justify-center h-full">
-          <Timer />
+          <Timer>{null}</Timer>
           <TrafficLight />
           <ProgressBar />
         </div>

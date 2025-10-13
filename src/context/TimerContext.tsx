@@ -1,11 +1,35 @@
 import React, { createContext, type PropsWithChildren, useContext, useReducer, useState } from "react";
-import type { TimerState, TimerStateDuration } from "../types";
+import type { SemaforoState, TimerState, TimerStateDuration } from "@/types";
 
-interface TimerStateType {
-  currentState: TimerState;
-  isRunning: boolean;
+interface SemaforoValues {
+  currentSemaforoState: SemaforoState;
+  currentTimerState: TimerState;
   timeLeft: number;
 }
+
+type SemaforoStateConfig = {
+  stages: Record<SemaforoState, { duration: number }>;
+};
+
+const semaforo_config: SemaforoStateConfig = {
+  stages: {
+    focus: {
+      duration: 40 * 60, // 40 minutes
+    },
+    transition: {
+      duration: 10, // 10 seconds
+    },
+    break: {
+      duration: 20 * 60, // 20 minutes
+    },
+  },
+};
+
+const initialSemaforoValues: SemaforoValues = {
+  currentSemaforoState: "focus",
+  currentTimerState: "initial",
+  timeLeft: semaforo_config.stages.focus.duration,
+};
 
 type TimerAction =
   | { type: "update_current_state"; payload: TimerState }
@@ -18,19 +42,7 @@ type TimerStateDurationContextType = {
   setStateDurations: React.Dispatch<React.SetStateAction<TimerStateDuration>>;
 } | null;
 
-const defaultStateDurations: TimerStateDuration = {
-  focus: 40 * 60, // 40 minutes
-  transition: 10, // 10 seconds
-  break: 20 * 60, // 20 minutes
-};
-
-const initialTimerState: TimerStateType = {
-  currentState: "focus",
-  isRunning: false,
-  timeLeft: defaultStateDurations.focus,
-};
-
-export const TimerContext = createContext<TimerStateType | null>(null);
+export const TimerContext = createContext<SemaforoValues | null>(null);
 export const TimerDispatchContext = createContext<React.Dispatch<TimerAction> | null>(null);
 export const TimerStateDurationContext = createContext<TimerStateDurationContextType>(null);
 
@@ -56,7 +68,7 @@ export function useTimerStateDurationContext() {
   return context;
 }
 
-function timerStateReducer(timerState: TimerStateType, action: TimerAction) {
+function timerStateReducer(timerState: SemaforoValues, action: TimerAction) {
   switch (action.type) {
     case "update_current_state": {
       return {
@@ -89,7 +101,7 @@ function timerStateReducer(timerState: TimerStateType, action: TimerAction) {
 }
 
 export function TimerContextProvider({ children }: PropsWithChildren) {
-  const [timerState, dispatch] = useReducer(timerStateReducer, initialTimerState);
+  const [timerState, dispatch] = useReducer(timerStateReducer, initialSemaforoValues);
   const [stateDurations, setStateDurations] = useState(defaultStateDurations);
 
   return (

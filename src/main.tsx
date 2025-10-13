@@ -6,8 +6,8 @@ import { TimerContextProvider } from "./context/TimerContext.tsx";
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
-    <TimerContextProvider>
-      <App />
-    </TimerContextProvider>
+    {/* <TimerContextProvider> */}
+    <App />
+    {/* </TimerContextProvider> */}
   </StrictMode>,
 );
