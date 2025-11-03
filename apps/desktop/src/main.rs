@@ -66,11 +66,11 @@ impl Render for RootView {
                     window_control_buttons(self, window, cx),
                 ))
                 .children([
-                    timer(),
+                    timer().mt(Pixels::from(36u32)),
                     traffic_light()
-                        .pt(Pixels::from(24u32))
-                        .pb(Pixels::from(24u32)),
-                    progress_bar(),
+                        .mt(Pixels::from(12u32))
+                        .mb(Pixels::from(18u32)),
+                    progress_bar().mb(Pixels::from(18u32)),
                 ]),
         )
     }
@@ -120,9 +120,6 @@ fn main() {
                 is_running: false,
                 is_folded: false,
             });
-            // root_view_entity.update(app, |state, _cx| {
-            //     state.is_running = !state.is_running;
-            // });
             return root_view_entity;
         })
         .unwrap();

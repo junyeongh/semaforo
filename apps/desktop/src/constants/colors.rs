@@ -14,7 +14,8 @@ pub struct Colors;
 #[allow(dead_code)]
 #[allow(non_upper_case_globals)]
 impl Colors {
-    pub const light_gray: Rgba = rgba(209, 209, 209, 1.0);
+    pub const light_gray: Rgba = rgba(217, 217, 217, 1.0);
+    pub const light_gray_border: Rgba = rgba(152, 152, 152, 1.0);
     // green
     pub const green: Rgba = rgba(9, 219, 48, 1.0);
     pub const green_border: Rgba = rgba(0, 192, 35, 1.0);
